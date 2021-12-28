@@ -19,6 +19,11 @@ import (
 	"go.riyazali.net/sqlite"
 )
 
+var (
+	user     = "root"
+	password = "root"
+)
+
 type repoLocator struct{}
 
 func (l *repoLocator) Open(ctx context.Context, path string) (*git.Repository, error) {
@@ -31,6 +36,13 @@ func init() {
 			options.WithRepoLocator(&repoLocator{}),
 		),
 	)
+
+	if u := os.Getenv("MYSQL_USER"); u != "" {
+		user = u
+	}
+	if p := os.Getenv("MYSQL_PWD"); p != "" {
+		password = p
+	}
 }
 
 func main() {
@@ -43,16 +55,12 @@ func main() {
 	config := server.Config{
 		Protocol: "tcp",
 		Address:  "0.0.0.0:3306",
-		Auth:     auth.NewNativeSingle("root", "mergestat", auth.ReadPerm),
+		Auth:     auth.NewNativeSingle(user, password, auth.ReadPerm),
 	}
 
 	s, err := server.NewDefaultServer(config, engine)
 	if err != nil {
 		log.Fatal(err)
-	}
-
-	if os.Getenv("ALLOW_CLEAR_TEXT_WITHOUT_TLS") == "true" {
-		s.Listener.AllowClearTextWithoutTLS = true
 	}
 
 	s.Listener.AllowClearTextWithoutTLS = true

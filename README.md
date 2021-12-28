@@ -21,10 +21,11 @@ The repo path is specified by the **database name** used when connecting to the 
 So, in the above, you would connect like so:
 
 ```
-mysql --host=127.0.0.1 --port=3306 "/repo" -u root -pmergestat -e "select hash from commits"
+mysql --host=127.0.0.1 --port=3306 "/repo" -u root -proot -e "select hash from commits"
 ```
 
-Note the password is currently hardcoded as `mergestat`.
+Note the password defaults to `root`.
+The user/password can be set by supplying the `MYSQL_USER` and `MYSQL_PWD` env vars.
 
 #### TODO
 - Publish pre-built binaries
