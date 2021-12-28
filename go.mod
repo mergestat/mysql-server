@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	github.com/dolthub/go-mysql-server v0.11.0
-	github.com/go-git/go-git/v5 v5.4.2
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/mattn/go-sqlite3 v1.14.9
 	github.com/mergestat/mergestat v0.5.1-0.20211220211419-265355587ad3
@@ -27,6 +26,7 @@ require (
 	github.com/go-enry/go-oniguruma v1.2.1 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.3.1 // indirect
+	github.com/go-git/go-git/v5 v5.4.2 // indirect
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

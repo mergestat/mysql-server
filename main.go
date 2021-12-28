@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"os"
@@ -9,11 +8,11 @@ import (
 	sqle "github.com/dolthub/go-mysql-server"
 	"github.com/dolthub/go-mysql-server/auth"
 	"github.com/dolthub/go-mysql-server/server"
-	"github.com/go-git/go-git/v5"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/mergestat/mergestat/extensions"
 	"github.com/mergestat/mergestat/extensions/options"
+	"github.com/mergestat/mergestat/pkg/locator"
 	_ "github.com/mergestat/mergestat/pkg/sqlite"
 	"github.com/mergestat/mysql-server/gitdb"
 	"go.riyazali.net/sqlite"
@@ -24,16 +23,10 @@ var (
 	password = "root"
 )
 
-type repoLocator struct{}
-
-func (l *repoLocator) Open(ctx context.Context, path string) (*git.Repository, error) {
-	return git.PlainOpen(path)
-}
-
 func init() {
 	sqlite.Register(
 		extensions.RegisterFn(
-			options.WithRepoLocator(&repoLocator{}),
+			options.WithRepoLocator(locator.CachedLocator(locator.MultiLocator())),
 		),
 	)
 
