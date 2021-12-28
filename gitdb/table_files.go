@@ -61,9 +61,6 @@ func newFilesIter(t *FilesTable) (*filesIter, error) {
 	if rows, err := iter.db.mergestat.Queryx(filesQuery, t.db.name); err != nil {
 		return nil, err
 	} else {
-		if err := iter.rows.Err(); err != nil {
-			return nil, err
-		}
 		if err := rows.Err(); err != nil {
 			return nil, err
 		}
@@ -75,6 +72,9 @@ func newFilesIter(t *FilesTable) (*filesIter, error) {
 func (iter *filesIter) Next() (sql.Row, error) {
 	s := file{}
 	if iter.rows.Next() {
+		if err := iter.rows.Err(); err != nil {
+			return nil, err
+		}
 		if err := iter.rows.StructScan(&s); err != nil {
 			return nil, err
 		}
