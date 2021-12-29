@@ -18,9 +18,10 @@ mysql --host=127.0.0.1 --port=3306 "https://github.com/mergestat/mergestat" -u r
 
 #### Tables
 
-- Commits
-- Refs
-- Files
+- `commits`
+- `refs`
+- `files`
+- `stats`
 
 ### Usage
 

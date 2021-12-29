@@ -28,13 +28,15 @@ func (db *Database) GetTableInsensitive(ctx *sql.Context, tblName string) (sql.T
 		return NewRefsTable(tblName, db), true, nil
 	case "files":
 		return NewFilesTable(tblName, db), true, nil
+	case "stats":
+		return NewStatsTable(tblName, db), true, nil
 	default:
 		return nil, false, nil
 	}
 }
 
 func (db *Database) GetTableNames(ctx *sql.Context) ([]string, error) {
-	return []string{"commits", "refs", "files"}, nil
+	return []string{"commits", "refs", "files", "stats"}, nil
 }
 
 func (db *Database) IsReadOnly() {}
