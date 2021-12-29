@@ -16,6 +16,25 @@ The repo is cloned to a temporary directory in the container before the query is
 mysql --host=127.0.0.1 --port=3306 "https://github.com/mergestat/mergestat" -u root -proot -e "select * from commits"
 ```
 
+#### Example
+
+You can use a MySQL client to connect to the server and execute queries.
+For instance, the following is a query against the [React codebase](https://github.com/facebook/react) that produces a chart of **unique contributors every month** (by `author_email`), using [Arctype](https://arctype.com/):
+
+![Example Using Arctype Client](./docs/react-distinct-authors-by-month.png)
+
+```sql
+SELECT
+    count(DISTINCT author_email),
+    YEAR(author_when) AS y,
+    MONTH(author_when) AS m,
+    DATE_FORMAT(author_when, '%Y-%m')
+FROM commits
+WHERE parents < 2
+GROUP BY y, m
+ORDER BY y, m
+```
+
 #### Tables
 
 - `commits`
